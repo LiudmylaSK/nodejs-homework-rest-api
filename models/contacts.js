@@ -56,19 +56,6 @@ const addContact = async (body) => {
   return newContact;
 };
 
-// const updateContact = async (contactId, body) => {
-//   const contacts = await listContacts();
-//   const contactIndex = contacts.findIndex(({ id }) => id === contactId);
-//   if (contactIndex === -1) {
-//     return null;
-//   }
-//   contacts[contactIndex] = { id: contactId, ...body };
-
-//   await writeContacts(contacts);
-
-//   return contacts[contactIndex];
-// };
-
 const updateContact = async (contactId, updatedFields) => {
   const contacts = await listContacts();
   const contactIndex = contacts.findIndex(({ id }) => id === contactId);
