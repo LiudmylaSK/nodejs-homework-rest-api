@@ -2,80 +2,56 @@ const { HttpError, ctrlWrapper } = require("../helpers");
 const { Contact } = require("../models/contacts");
 
 const getAll = async (req, res) => {
-  try {
-    const result = await Contact.find();
-    res.json(result);
-  } catch (error) {
-    throw HttpError(500, "Server error");
-  }
+  const result = await Contact.find();
+  res.json(result);
 };
 
 const getById = async (req, res) => {
-  try {
-    const { contactId } = req.params;
-    const result = await Contact.findById(contactId);
+  const { contactId } = req.params;
+  const result = await Contact.findById(contactId);
 
-    if (!result) throw HttpError(404, "Not found");
+  if (!result) throw HttpError(404, "Not found");
 
-    res.json(result);
-  } catch (error) {
-    throw HttpError(500, "Server error");
-  }
+  res.json(result);
 };
 
 const addNew = async (req, res) => {
-  try {
-    const result = await Contact.create(req.body);
-    res.status(201).json(result);
-  } catch (error) {
-    throw HttpError(500, "Server error");
-  }
+  const result = await Contact.create(req.body);
+  res.status(201).json(result);
 };
 
 const deleteById = async (req, res) => {
-  try {
-    const { contactId } = req.params;
-    const result = await Contact.findByIdAndDelete(contactId);
+  const { contactId } = req.params;
+  const result = await Contact.findByIdAndDelete(contactId);
 
-    if (!result) throw HttpError(404, "Not found");
+  if (!result) throw HttpError(404, "Not found");
 
-    res.json({ message: "Contact deleted" });
-  } catch (error) {
-    throw HttpError(500, "Server error");
-  }
+  res.json({ message: "Contact deleted" });
 };
 
 const updateById = async (req, res) => {
-  try {
-    const { contactId } = req.params;
-    const result = await Contact.findByIdAndUpdate(contactId, req.body, {
-      new: true,
-    });
+  const { contactId } = req.params;
+  const result = await Contact.findByIdAndUpdate(contactId, req.body, {
+    new: true,
+  });
 
-    if (!result) throw HttpError(404, "Not found");
+  if (!result) throw HttpError(404, "Not found");
 
-    res.json(result);
-  } catch (error) {
-    throw HttpError(500, "Server error");
-  }
+  res.json(result);
 };
 
 const updateStatusContact = async (req, res) => {
-  try {
-    const { contactId } = req.params;
+  const { contactId } = req.params;
 
-    const result = await Contact.findByIdAndUpdate(contactId, req.body, {
-      new: true,
-    });
+  const result = await Contact.findByIdAndUpdate(contactId, req.body, {
+    new: true,
+  });
 
-    if (!result) {
-      throw HttpError(404, "Not found");
-    }
-
-    res.json(result);
-  } catch (error) {
-    throw HttpError(500, "Server error");
+  if (!result) {
+    throw HttpError(404, "Not found");
   }
+
+  res.json(result);
 };
 
 module.exports = {
