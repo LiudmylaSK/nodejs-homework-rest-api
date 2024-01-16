@@ -21,9 +21,12 @@ const addSchema = Joi.object({
 const updateSchema = Joi.object({
   name: Joi.string(),
   email: Joi.string(),
-  phone: Joi.string(),
+  phone: Joi.string().pattern(phoneRegExp),
   favorite: Joi.boolean(),
-});
+})
+  .min(1)
+  .max(4)
+  .options({ allowUnknown: true, presence: "optional" });
 
 const updateFavoriteSchema = Joi.object({
   favorite: Joi.boolean()
@@ -31,4 +34,6 @@ const updateFavoriteSchema = Joi.object({
     .messages({ "any.required": `missing field "favorite"` }),
 });
 
-module.exports = { addSchema, updateSchema, updateFavoriteSchema };
+const schemas = { addSchema, updateSchema, updateFavoriteSchema };
+
+module.exports = schemas;
