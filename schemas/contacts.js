@@ -1,27 +1,39 @@
 const Joi = require("joi");
 
+const phoneRegExp = /^\(\d{3}\) \d{3}-\d{4}$/;
+
 const addSchema = Joi.object({
-  name: Joi.string().trim().min(3).max(30).required(),
-  email: Joi.string().trim().email().required(),
+  name: Joi.string()
+    .min(2)
+    .required()
+    .messages({ "any.required": `missing required "name" field ` }),
+  email: Joi.string()
+    .email()
+    .required()
+    .messages({ "any.required": `missing required "email" field` }),
   phone: Joi.string()
-    .trim()
-    .replace(/[^\d]+/g, "")
-    .min(10)
-    .max(15)
-    .required(),
+    .pattern(phoneRegExp)
+    .required()
+    .messages({ "any.required": `missing required "phone" field` }),
+  favorite: Joi.boolean(),
 });
 
 const updateSchema = Joi.object({
-  name: Joi.string().trim().min(3).max(30),
-  email: Joi.string().trim().email(),
-  phone: Joi.string()
-    .trim()
-    .replace(/[^\d]+/g, "")
-    .min(10)
-    .max(15),
+  name: Joi.string(),
+  email: Joi.string(),
+  phone: Joi.string().pattern(phoneRegExp),
+  favorite: Joi.boolean(),
 })
   .min(1)
-  .max(3)
+  .max(4)
   .options({ allowUnknown: true, presence: "optional" });
 
-module.exports = { addSchema, updateSchema };
+const updateFavoriteSchema = Joi.object({
+  favorite: Joi.boolean()
+    .required()
+    .messages({ "any.required": `missing field "favorite"` }),
+});
+
+const schemas = { addSchema, updateSchema, updateFavoriteSchema };
+
+module.exports = schemas;
