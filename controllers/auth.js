@@ -3,8 +3,10 @@ const { User } = require("../models/users");
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+
 const gravatar = require("gravatar");
 const path = require("path");
+
 const fs = require("fs/promises");
 const Jimp = require("jimp");
 
@@ -89,11 +91,8 @@ const updateAvatar = async (req, res) => {
   const filename = `${_id}_${originalname}`;
   const resultUpload = path.join(avatarsDir, filename);
 
-  const resizeFile = await Jimp.read(resultUpload);
-  resizeFile
-    .autocrop()
-    .cover(250, 250, Jimp.HORIZONTAL_ALIGN_CENTER || Jimp.VERTICAL_ALIGN_MIDDLE)
-    .write(resultUpload);
+  const resizeFile = await Jimp.read(tempUpload);
+  resizeFile.resize(250, 250).write(tempUpload);
 
   await fs.rename(tempUpload, resultUpload);
 

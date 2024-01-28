@@ -34,7 +34,8 @@ authRouter.patch(
 authRouter.patch(
   "/avatars",
   authenticate,
-  upload.single("avatar", authCtrl.updateAvatar)
+  upload.single("avatar"),
+  authCtrl.updateAvatar
 );
 
 module.exports = authRouter;
