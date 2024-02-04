@@ -86,6 +86,10 @@ const subscription = async (req, res) => {
 const updateAvatar = async (req, res) => {
   const { _id } = req.user;
 
+  if (!req.file) {
+    throw HttpError(400, "Avatar file not transferred");
+  }
+
   const { path: tempUpload, originalname } = req.file;
 
   const filename = `${_id}_${originalname}`;
