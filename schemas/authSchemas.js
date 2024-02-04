@@ -16,6 +16,10 @@ const userRegisterSchema = Joi.object({
   subscription: Joi.string(),
 });
 
+const emailSchema = Joi.object({
+  email: Joi.string().pattern(emailRegExp).required(),
+});
+
 const userLoginSchema = Joi.object({
   password: Joi.string()
     .min(6)
@@ -34,6 +38,7 @@ const userSubscriptionSchema = Joi.object({
 
 const authSchemas = {
   userRegisterSchema,
+  emailSchema,
   userLoginSchema,
   userSubscriptionSchema,
 };
